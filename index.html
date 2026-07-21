@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seneca Trace — Industrial datasets for Physical AI</title>
+    <meta
+      name="description"
+      content="Capturamos el oficio experto en plantas del noreste de México y lo empaquetamos como datasets para entrenar robots de precisión."
+    />
+    <meta property="og:title" content="Seneca Trace" />
+    <meta
+      property="og:description"
+      content="Las cartas que enseñan a los robots. Datasets industriales para Physical AI."
+    />
+    <meta property="og:url" content="https://senecatrace.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              serif: ["Instrument Serif", "Georgia", "serif"],
+            },
+            colors: {
+              ink: "#0a0a0b",
+              surface: "#111113",
+              border: "#222226",
+              muted: "#8b8b94",
+              accent: "#e8e4dc",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .grain {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      }
+    </style>
+  </head>
+  <body class="bg-ink text-accent antialiased grain">
+    <!-- Nav -->
+    <header
+      class="fixed top-0 z-50 w-full border-b border-border/60 bg-ink/80 backdrop-blur-md"
+    >
+      <div
+        class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4"
+      >
+        <a href="#" class="text-sm font-medium tracking-tight">Seneca Trace</a>
+        <nav class="hidden items-center gap-8 text-sm text-muted md:flex">
+          <a href="#problem" class="transition hover:text-accent">Problema</a>
+          <a href="#how" class="transition hover:text-accent">Cómo funciona</a>
+          <a href="#contact" class="transition hover:text-accent">Contacto</a>
+        </nav>
+        <a
+          href="#contact"
+          class="rounded-full border border-border bg-surface px-4 py-2 text-xs font-medium transition hover:border-muted"
+        >
+          Solicitar acceso
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative px-6 pb-24 pt-32 md:pb-32 md:pt-40">
+      <div class="mx-auto max-w-4xl text-center">
+        <p
+          class="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-muted"
+        >
+          Physical AI · Saltillo & Monterrey
+        </p>
+        <h1
+          class="font-serif text-5xl leading-[1.05] tracking-tight md:text-7xl"
+        >
+          El oficio humano,<br />
+          <span class="italic text-muted">convertido en dato.</span>
+        </h1>
+        <p class="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted md:text-lg">
+          Seneca Trace captura el trabajo experto en líneas de producción del
+          noreste de México y lo empaqueta como datasets listos para entrenar
+          robots de precisión milimétrica.
+        </p>
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="#contact"
+            class="rounded-full bg-accent px-8 py-3 text-sm font-medium text-ink transition hover:bg-white"
+          >
+            Solicitar acceso anticipado
+          </a>
+          <a
+            href="#how"
+            class="text-sm text-muted underline-offset-4 transition hover:text-accent hover:underline"
+          >
+            Ver cómo funciona
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats strip -->
+    <section class="border-y border-border px-6 py-12">
+      <div
+        class="mx-auto grid max-w-5xl grid-cols-2 gap-8 md:grid-cols-4 md:gap-4"
+      >
+        <div class="text-center md:text-left">
+          <p class="font-serif text-3xl md:text-4xl">B2B2B</p>
+          <p class="mt-1 text-xs text-muted">Planta → dataset → robótica</p>
+        </div>
+        <div class="text-center md:text-left">
+          <p class="font-serif text-3xl md:text-4xl">Ensamble</p>
+          <p class="mt-1 text-xs text-muted">Pick-place milimétrico</p>
+        </div>
+        <div class="text-center md:text-left">
+          <p class="font-serif text-3xl md:text-4xl">Multimodal</p>
+          <p class="mt-1 text-xs text-muted">RGB-D + egocentric + sync</p>
+        </div>
+        <div class="text-center md:text-left">
+          <p class="font-serif text-3xl md:text-4xl">Export</p>
+          <p class="mt-1 text-xs text-muted">LeRobot · HDF5 · ROS bags</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem" class="px-6 py-24 md:py-32">
+      <div class="mx-auto max-w-5xl">
+        <p class="text-xs font-medium uppercase tracking-[0.2em] text-muted">
+          El cuello de botella
+        </p>
+        <h2 class="mt-4 max-w-2xl font-serif text-4xl leading-tight md:text-5xl">
+          Tu modelo no falla.<br />Faltan los datos correctos.
+        </h2>
+        <div class="mt-16 grid gap-6 md:grid-cols-3">
+          <article class="rounded-2xl border border-border bg-surface p-8">
+            <h3 class="text-sm font-medium">No hay suficientes datos</h3>
+            <p class="mt-3 text-sm leading-relaxed text-muted">
+              VLA e imitation learning necesitan miles de trayectorias humanas
+              reales. En procesos industriales milimétricos, casi no existen en
+              el mercado.
+            </p>
+          </article>
+          <article class="rounded-2xl border border-border bg-surface p-8">
+            <h3 class="text-sm font-medium">Los datasets no encajan</h3>
+            <p class="mt-3 text-sm leading-relaxed text-muted">
+              Lo que encuentras no fue grabado para tu embodiment, sensores ni
+              entorno. Pierdes ciclos adaptando data en lugar de entrenar.
+            </p>
+          </article>
+          <article class="rounded-2xl border border-border bg-surface p-8">
+            <h3 class="text-sm font-medium">Capturar es caro y lento</h3>
+            <p class="mt-3 text-sm leading-relaxed text-muted">
+              Montar infraestructura propia en planta lleva semanas, personas y
+              capital. Cada iteración retrasa el deploy del robot.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- How -->
+    <section id="how" class="border-t border-border px-6 py-24 md:py-32">
+      <div class="mx-auto max-w-5xl">
+        <p class="text-xs font-medium uppercase tracking-[0.2em] text-muted">
+          Cómo funciona
+        </p>
+        <h2 class="mt-4 font-serif text-4xl md:text-5xl">
+          Dos lados, un puente.
+        </h2>
+        <div class="mt-16 grid gap-8 md:grid-cols-2">
+          <div class="rounded-2xl border border-border bg-surface p-10">
+            <span class="text-xs text-muted">01 · Supply</span>
+            <h3 class="mt-4 font-serif text-2xl">Partnership con planta</h3>
+            <p class="mt-4 text-sm leading-relaxed text-muted">
+              Instalamos kit de captura en la línea. Protocolo, NDAs y revenue
+              share. El operador experto sigue trabajando; nosotros registramos
+              la maestría.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-border bg-surface p-10">
+            <span class="text-xs text-muted">02 · Demand</span>
+            <h3 class="mt-4 font-serif text-2xl">Dataset para robótica</h3>
+            <p class="mt-4 text-sm leading-relaxed text-muted">
+              QC, anotación mínima y export en el formato que tu lab necesita.
+              Bespoke collect o paquetes curados por proceso y vertical.
+            </p>
+          </div>
+        </div>
+        <blockquote
+          class="mt-16 border-l-2 border-muted pl-6 font-serif text-2xl italic text-muted md:text-3xl"
+        >
+          “Como Séneca formaba a distancia con sus cartas, Seneca Trace empaqueta
+          el oficio para que los robots aprendan.”
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- For who -->
+    <section class="border-t border-border px-6 py-24 md:py-32">
+      <div class="mx-auto max-w-5xl">
+        <p class="text-xs font-medium uppercase tracking-[0.2em] text-muted">
+          Para quién
+        </p>
+        <div class="mt-12 grid gap-6 md:grid-cols-2">
+          <div class="rounded-2xl border border-border p-8">
+            <h3 class="font-medium">Manufactura</h3>
+            <p class="mt-3 text-sm text-muted">
+              Plantas en Saltillo, Ramos Arizpe y Monterrey que quieren
+              automatizar procesos manuales sin perder el know-how del operador.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-border p-8">
+            <h3 class="font-medium">Labs de robótica & IA</h3>
+            <p class="mt-3 text-sm text-muted">
+              Equipos entrenando manipulación, VLA o imitation learning que
+              necesitan data real de entornos industriales en México.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Waitlist -->
+    <section id="contact" class="border-t border-border px-6 py-24 md:py-32">
+      <div class="mx-auto max-w-xl text-center">
+        <p class="text-xs font-medium uppercase tracking-[0.2em] text-muted">
+          Acceso anticipado
+        </p>
+        <h2 class="mt-4 font-serif text-4xl md:text-5xl">
+          Construye con nosotros.
+        </h2>
+        <p class="mt-4 text-sm text-muted">
+          ¿Planta, lab de robótica o integrador? Déjanos tu correo — te
+          contactamos para un piloto en el noreste de México.
+        </p>
+
+        <!--
+          SETUP: Reemplaza YOUR_FORM_ID con tu ID de Formspree
+          1. Ve a https://formspree.io → Create form → email: tu@correo.com
+          2. Copia el endpoint (ej. https://formspree.io/f/xyzabcde)
+          3. Cambia action abajo
+        -->
+        <form
+          id="waitlist-form"
+          action="https://formspree.io/f/YOUR_FORM_ID"
+          method="POST"
+          class="mt-10 flex flex-col gap-3 sm:flex-row"
+        >
+          <input type="hidden" name="_subject" value="Seneca Trace — waitlist" />
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="tu@empresa.com"
+            class="flex-1 rounded-full border border-border bg-surface px-5 py-3 text-sm text-accent placeholder:text-muted focus:border-muted focus:outline-none"
+          />
+          <select
+            name="tipo"
+            class="rounded-full border border-border bg-surface px-5 py-3 text-sm text-muted focus:border-muted focus:outline-none sm:max-w-[180px]"
+          >
+            <option value="planta">Planta / Manufactura</option>
+            <option value="robotics">Lab de robótica / IA</option>
+            <option value="integrador">Integrador</option>
+            <option value="otro">Otro</option>
+          </select>
+          <button
+            type="submit"
+            class="rounded-full bg-accent px-8 py-3 text-sm font-medium text-ink transition hover:bg-white"
+          >
+            Enviar
+          </button>
+        </form>
+        <p id="form-status" class="mt-4 hidden text-sm text-muted"></p>
+        <p class="mt-6 text-xs text-muted">
+          O escríbenos directo:
+          <a href="mailto:hello@senecatrace.com" class="underline hover:text-accent"
+            >hello@senecatrace.com</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-border px-6 py-10">
+      <div
+        class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-xs text-muted md:flex-row"
+      >
+        <span>Seneca Trace · senecatrace.com</span>
+        <span>Saltillo & Monterrey, México</span>
+      </div>
+    </footer>
+
+    <script>
+      const form = document.getElementById("waitlist-form");
+      const status = document.getElementById("form-status");
+
+      form.addEventListener("submit", async (e) => {
+        if (form.action.includes("YOUR_FORM_ID")) {
+          e.preventDefault();
+          status.textContent =
+            "Configura Formspree en index.html (reemplaza YOUR_FORM_ID).";
+          status.classList.remove("hidden");
+          return;
+        }
+        e.preventDefault();
+        status.textContent = "Enviando…";
+        status.classList.remove("hidden");
+        try {
+          const res = await fetch(form.action, {
+            method: "POST",
+            body: new FormData(form),
+            headers: { Accept: "application/json" },
+          });
+          if (res.ok) {
+            status.textContent = "Listo. Te contactamos pronto.";
+            form.reset();
+          } else {
+            status.textContent = "Error al enviar. Intenta por email.";
+          }
+        } catch {
+          status.textContent = "Error de red. Escríbenos por email.";
+        }
+      });
+    </script>
+  </body>
+</html>
