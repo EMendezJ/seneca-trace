@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Seneca Trace — Industrial datasets for Physical AI</title>
     <meta
       name="description"
-      content="Capturamos el oficio experto en plantas del noreste de México y lo empaquetamos como datasets para entrenar robots de precisión."
+      content="We capture expert human work on real production lines in northern Mexico and package it as training-ready datasets for precision robotics."
     />
     <meta property="og:title" content="Seneca Trace" />
     <meta
       property="og:description"
-      content="Las cartas que enseñan a los robots. Datasets industriales para Physical AI."
+      content="The data layer for Physical AI. Real industrial demonstrations, packaged for robot learning."
     />
     <meta property="og:url" content="https://senecatrace.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,15 +26,18 @@
         theme: {
           extend: {
             fontFamily: {
+              display: ["Space Grotesk", "system-ui", "sans-serif"],
               sans: ["Inter", "system-ui", "sans-serif"],
-              serif: ["Instrument Serif", "Georgia", "serif"],
+              mono: ["JetBrains Mono", "monospace"],
             },
             colors: {
-              ink: "#0a0a0b",
-              surface: "#111113",
-              border: "#222226",
-              muted: "#8b8b94",
-              accent: "#e8e4dc",
+              ink: "#050507",
+              surface: "#0c0c10",
+              raise: "#131318",
+              border: "#1e1e26",
+              muted: "#7a7a88",
+              fg: "#ececf1",
+              signal: "#b8ff5c",
             },
           },
         },
@@ -44,124 +47,173 @@
       html {
         scroll-behavior: smooth;
       }
-      .grain {
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      body {
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
+      .glow {
+        box-shadow: 0 0 40px rgba(184, 255, 92, 0.08);
+      }
+      ::selection {
+        background: #b8ff5c;
+        color: #050507;
       }
     </style>
   </head>
-  <body class="bg-ink text-accent antialiased grain">
+  <body class="bg-ink font-sans text-fg antialiased">
     <!-- Nav -->
     <header
-      class="fixed top-0 z-50 w-full border-b border-border/60 bg-ink/80 backdrop-blur-md"
+      class="fixed top-0 z-50 w-full border-b border-border/70 bg-ink/85 backdrop-blur-md"
     >
       <div
         class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4"
       >
-        <a href="#" class="text-sm font-medium tracking-tight">Seneca Trace</a>
-        <nav class="hidden items-center gap-8 text-sm text-muted md:flex">
-          <a href="#problem" class="transition hover:text-accent">Problema</a>
-          <a href="#how" class="transition hover:text-accent">Cómo funciona</a>
-          <a href="#contact" class="transition hover:text-accent">Contacto</a>
+        <a href="#" class="font-display text-sm font-600 tracking-tight">
+          SENECA<span class="text-signal">·</span>TRACE
+        </a>
+        <nav
+          class="hidden items-center gap-8 font-mono text-[11px] uppercase tracking-widest text-muted md:flex"
+        >
+          <a href="#problem" class="transition hover:text-fg">Problem</a>
+          <a href="#how" class="transition hover:text-fg">How it works</a>
+          <a href="#data" class="transition hover:text-fg">The data</a>
+          <a href="#access" class="transition hover:text-fg">Access</a>
         </nav>
         <a
-          href="#contact"
-          class="rounded-full border border-border bg-surface px-4 py-2 text-xs font-medium transition hover:border-muted"
+          href="#access"
+          class="rounded border border-border bg-raise px-4 py-2 font-mono text-[11px] uppercase tracking-widest transition hover:border-signal/50 hover:text-signal"
         >
-          Solicitar acceso
+          Request access
         </a>
       </div>
     </header>
 
     <!-- Hero -->
-    <section class="relative px-6 pb-24 pt-32 md:pb-32 md:pt-40">
-      <div class="mx-auto max-w-4xl text-center">
+    <section class="relative px-6 pb-28 pt-36 md:pb-36 md:pt-48">
+      <div class="mx-auto max-w-5xl">
         <p
-          class="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-muted"
+          class="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest text-muted"
         >
-          Physical AI · Saltillo & Monterrey
+          <span class="h-1.5 w-1.5 rounded-full bg-signal"></span>
+          Physical AI · Saltillo — Monterrey, MX
         </p>
         <h1
-          class="font-serif text-5xl leading-[1.05] tracking-tight md:text-7xl"
+          class="font-display text-5xl font-600 leading-[1.02] tracking-tight md:text-8xl"
         >
-          El oficio humano,<br />
-          <span class="italic text-muted">convertido en dato.</span>
+          Expert human work,<br />
+          <span class="text-muted">packaged as</span>
+          <span class="text-signal">training data.</span>
         </h1>
-        <p class="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted md:text-lg">
-          Seneca Trace captura el trabajo experto en líneas de producción del
-          noreste de México y lo empaqueta como datasets listos para entrenar
-          robots de precisión milimétrica.
+        <p class="mt-10 max-w-xl text-base leading-relaxed text-muted md:text-lg">
+          Seneca Trace records skilled operators on real production lines in
+          northern Mexico — and delivers millimeter-precision demonstration
+          datasets, ready for robot learning.
         </p>
-        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div class="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">
           <a
-            href="#contact"
-            class="rounded-full bg-accent px-8 py-3 text-sm font-medium text-ink transition hover:bg-white"
+            href="#access"
+            class="glow rounded bg-signal px-8 py-3.5 text-center font-display text-sm font-600 text-ink transition hover:brightness-110"
           >
-            Solicitar acceso anticipado
+            Request early access
           </a>
           <a
             href="#how"
-            class="text-sm text-muted underline-offset-4 transition hover:text-accent hover:underline"
+            class="px-2 py-3 font-mono text-[12px] uppercase tracking-widest text-muted transition hover:text-fg"
           >
-            Ver cómo funciona
+            How it works ↓
           </a>
         </div>
       </div>
     </section>
 
-    <!-- Stats strip -->
-    <section class="border-y border-border px-6 py-12">
+    <!-- Ticker strip -->
+    <section class="border-y border-border bg-surface px-6 py-10">
       <div
-        class="mx-auto grid max-w-5xl grid-cols-2 gap-8 md:grid-cols-4 md:gap-4"
+        class="mx-auto grid max-w-6xl grid-cols-2 gap-10 md:grid-cols-4 md:gap-6"
       >
-        <div class="text-center md:text-left">
-          <p class="font-serif text-3xl md:text-4xl">B2B2B</p>
-          <p class="mt-1 text-xs text-muted">Planta → dataset → robótica</p>
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
+            Model
+          </p>
+          <p class="mt-2 font-display text-2xl font-600 md:text-3xl">B2B2B</p>
+          <p class="mt-1 text-xs text-muted">Factory → dataset → robotics lab</p>
         </div>
-        <div class="text-center md:text-left">
-          <p class="font-serif text-3xl md:text-4xl">Ensamble</p>
-          <p class="mt-1 text-xs text-muted">Pick-place milimétrico</p>
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
+            First vertical
+          </p>
+          <p class="mt-2 font-display text-2xl font-600 md:text-3xl">
+            Assembly
+          </p>
+          <p class="mt-1 text-xs text-muted">Millimeter pick & place</p>
         </div>
-        <div class="text-center md:text-left">
-          <p class="font-serif text-3xl md:text-4xl">Multimodal</p>
-          <p class="mt-1 text-xs text-muted">RGB-D + egocentric + sync</p>
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
+            Capture
+          </p>
+          <p class="mt-2 font-display text-2xl font-600 md:text-3xl">
+            Multimodal
+          </p>
+          <p class="mt-1 text-xs text-muted">RGB-D · egocentric · synced</p>
         </div>
-        <div class="text-center md:text-left">
-          <p class="font-serif text-3xl md:text-4xl">Export</p>
-          <p class="mt-1 text-xs text-muted">LeRobot · HDF5 · ROS bags</p>
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
+            Delivery
+          </p>
+          <p class="mt-2 font-display text-2xl font-600 md:text-3xl">
+            Your format
+          </p>
+          <p class="mt-1 text-xs text-muted">LeRobot · HDF5 · ROS 2 bags</p>
         </div>
       </div>
     </section>
 
     <!-- Problem -->
-    <section id="problem" class="px-6 py-24 md:py-32">
-      <div class="mx-auto max-w-5xl">
-        <p class="text-xs font-medium uppercase tracking-[0.2em] text-muted">
-          El cuello de botella
+    <section id="problem" class="px-6 py-28 md:py-36">
+      <div class="mx-auto max-w-6xl">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
+          01 — The bottleneck
         </p>
-        <h2 class="mt-4 max-w-2xl font-serif text-4xl leading-tight md:text-5xl">
-          Tu modelo no falla.<br />Faltan los datos correctos.
+        <h2
+          class="mt-6 max-w-3xl font-display text-4xl font-600 leading-tight tracking-tight md:text-6xl"
+        >
+          Your model isn't the problem.<br />
+          <span class="text-muted">Your data is.</span>
         </h2>
-        <div class="mt-16 grid gap-6 md:grid-cols-3">
-          <article class="rounded-2xl border border-border bg-surface p-8">
-            <h3 class="text-sm font-medium">No hay suficientes datos</h3>
+        <div class="mt-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-3">
+          <article class="bg-surface p-8 md:p-10">
+            <p class="font-mono text-[11px] text-muted">/ 001</p>
+            <h3 class="mt-4 font-display text-lg font-600">
+              Not enough trajectories
+            </h3>
             <p class="mt-3 text-sm leading-relaxed text-muted">
-              VLA e imitation learning necesitan miles de trayectorias humanas
-              reales. En procesos industriales milimétricos, casi no existen en
-              el mercado.
+              VLA and imitation learning need thousands of real human
+              demonstrations. For millimeter-precision industrial tasks, that
+              data barely exists on the market.
             </p>
           </article>
-          <article class="rounded-2xl border border-border bg-surface p-8">
-            <h3 class="text-sm font-medium">Los datasets no encajan</h3>
+          <article class="bg-surface p-8 md:p-10">
+            <p class="font-mono text-[11px] text-muted">/ 002</p>
+            <h3 class="mt-4 font-display text-lg font-600">
+              Datasets that don't fit
+            </h3>
             <p class="mt-3 text-sm leading-relaxed text-muted">
-              Lo que encuentras no fue grabado para tu embodiment, sensores ni
-              entorno. Pierdes ciclos adaptando data en lugar de entrenar.
+              What you find wasn't recorded for your embodiment, sensors, or
+              environment. You burn cycles adapting data instead of training.
             </p>
           </article>
-          <article class="rounded-2xl border border-border bg-surface p-8">
-            <h3 class="text-sm font-medium">Capturar es caro y lento</h3>
+          <article class="bg-surface p-8 md:p-10">
+            <p class="font-mono text-[11px] text-muted">/ 003</p>
+            <h3 class="mt-4 font-display text-lg font-600">
+              Collection is slow & costly
+            </h3>
             <p class="mt-3 text-sm leading-relaxed text-muted">
-              Montar infraestructura propia en planta lleva semanas, personas y
-              capital. Cada iteración retrasa el deploy del robot.
+              Standing up capture infrastructure inside a factory takes weeks,
+              people, and capital. Every iteration delays deployment.
             </p>
           </article>
         </div>
@@ -169,115 +221,180 @@
     </section>
 
     <!-- How -->
-    <section id="how" class="border-t border-border px-6 py-24 md:py-32">
-      <div class="mx-auto max-w-5xl">
-        <p class="text-xs font-medium uppercase tracking-[0.2em] text-muted">
-          Cómo funciona
+    <section id="how" class="border-t border-border px-6 py-28 md:py-36">
+      <div class="mx-auto max-w-6xl">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
+          02 — How it works
         </p>
-        <h2 class="mt-4 font-serif text-4xl md:text-5xl">
-          Dos lados, un puente.
+        <h2
+          class="mt-6 font-display text-4xl font-600 tracking-tight md:text-6xl"
+        >
+          Two sides. One bridge.
         </h2>
-        <div class="mt-16 grid gap-8 md:grid-cols-2">
-          <div class="rounded-2xl border border-border bg-surface p-10">
-            <span class="text-xs text-muted">01 · Supply</span>
-            <h3 class="mt-4 font-serif text-2xl">Partnership con planta</h3>
-            <p class="mt-4 text-sm leading-relaxed text-muted">
-              Instalamos kit de captura en la línea. Protocolo, NDAs y revenue
-              share. El operador experto sigue trabajando; nosotros registramos
-              la maestría.
+        <div class="mt-16 grid gap-6 md:grid-cols-2">
+          <div class="rounded-lg border border-border bg-surface p-10">
+            <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
+              Supply — the factory
             </p>
+            <h3 class="mt-4 font-display text-2xl font-600">
+              Partner production lines
+            </h3>
+            <p class="mt-4 text-sm leading-relaxed text-muted">
+              We install our capture kit on active lines under NDA and revenue
+              share. Expert operators keep working — we record the mastery:
+              synced RGB-D, egocentric video, and process metadata.
+            </p>
+            <ul class="mt-6 space-y-2 font-mono text-[12px] text-muted">
+              <li><span class="text-signal">→</span> Zero disruption to production</li>
+              <li><span class="text-signal">→</span> Data rights and privacy by contract</li>
+              <li><span class="text-signal">→</span> Revenue share on every license</li>
+            </ul>
           </div>
-          <div class="rounded-2xl border border-border bg-surface p-10">
-            <span class="text-xs text-muted">02 · Demand</span>
-            <h3 class="mt-4 font-serif text-2xl">Dataset para robótica</h3>
-            <p class="mt-4 text-sm leading-relaxed text-muted">
-              QC, anotación mínima y export en el formato que tu lab necesita.
-              Bespoke collect o paquetes curados por proceso y vertical.
+          <div class="rounded-lg border border-border bg-surface p-10">
+            <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
+              Demand — the lab
             </p>
+            <h3 class="mt-4 font-display text-2xl font-600">
+              Training-ready datasets
+            </h3>
+            <p class="mt-4 text-sm leading-relaxed text-muted">
+              QC'd, segmented, and annotated demonstrations exported in the
+              format your stack already consumes. Off-the-shelf packages or
+              bespoke collection built around your tasks.
+            </p>
+            <ul class="mt-6 space-y-2 font-mono text-[12px] text-muted">
+              <li><span class="text-signal">→</span> LeRobot / HDF5 / ROS 2 bags</li>
+              <li><span class="text-signal">→</span> Skill segments + success labels</li>
+              <li><span class="text-signal">→</span> Recurring collects on your training cycle</li>
+            </ul>
           </div>
         </div>
-        <blockquote
-          class="mt-16 border-l-2 border-muted pl-6 font-serif text-2xl italic text-muted md:text-3xl"
+      </div>
+    </section>
+
+    <!-- Data spec -->
+    <section id="data" class="border-t border-border px-6 py-28 md:py-36">
+      <div class="mx-auto max-w-6xl">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
+          03 — The data
+        </p>
+        <h2
+          class="mt-6 max-w-3xl font-display text-4xl font-600 tracking-tight md:text-6xl"
         >
-          “Como Séneca formaba a distancia con sus cartas, Seneca Trace empaqueta
-          el oficio para que los robots aprendan.”
+          Real lines. Real hands.<br />
+          <span class="text-muted">Not lab demos.</span>
+        </h2>
+        <div class="mt-16 overflow-hidden rounded-lg border border-border">
+          <table class="w-full text-left text-sm">
+            <tbody class="divide-y divide-border">
+              <tr class="bg-surface">
+                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted md:w-64">
+                  Environments
+                </td>
+                <td class="px-6 py-4 text-muted">
+                  Automotive & electronics assembly · metalworking · packing —
+                  Saltillo, Ramos Arizpe, Monterrey
+                </td>
+              </tr>
+              <tr class="bg-surface">
+                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted">
+                  Signals
+                </td>
+                <td class="px-6 py-4 text-muted">
+                  RGB-D multi-view · egocentric video · hardware-synced
+                  timestamps · optional wrist IMU
+                </td>
+              </tr>
+              <tr class="bg-surface">
+                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted">
+                  Annotations
+                </td>
+                <td class="px-6 py-4 text-muted">
+                  Skill segmentation · success / failure labels · operator &
+                  process versioning · scene calibration
+                </td>
+              </tr>
+              <tr class="bg-surface">
+                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted">
+                  Formats
+                </td>
+                <td class="px-6 py-4 text-muted">
+                  LeRobot · HDF5 · ROS 2 bags · custom pipelines on request
+                </td>
+              </tr>
+              <tr class="bg-surface">
+                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted">
+                  Licensing
+                </td>
+                <td class="px-6 py-4 text-muted">
+                  Per-hour or per-trajectory · exclusive collects available ·
+                  full chain of consent
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <blockquote
+          class="mt-16 max-w-3xl border-l-2 border-signal pl-6 font-display text-xl font-500 leading-relaxed text-muted md:text-2xl"
+        >
+          Seneca taught a generation through letters — knowledge that traveled
+          without the teacher. Our datasets are those letters. Robots are the
+          students.
         </blockquote>
       </div>
     </section>
 
-    <!-- For who -->
-    <section class="border-t border-border px-6 py-24 md:py-32">
-      <div class="mx-auto max-w-5xl">
-        <p class="text-xs font-medium uppercase tracking-[0.2em] text-muted">
-          Para quién
+    <!-- Access / waitlist -->
+    <section id="access" class="border-t border-border px-6 py-28 md:py-36">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
+          04 — Early access
         </p>
-        <div class="mt-12 grid gap-6 md:grid-cols-2">
-          <div class="rounded-2xl border border-border p-8">
-            <h3 class="font-medium">Manufactura</h3>
-            <p class="mt-3 text-sm text-muted">
-              Plantas en Saltillo, Ramos Arizpe y Monterrey que quieren
-              automatizar procesos manuales sin perder el know-how del operador.
-            </p>
-          </div>
-          <div class="rounded-2xl border border-border p-8">
-            <h3 class="font-medium">Labs de robótica & IA</h3>
-            <p class="mt-3 text-sm text-muted">
-              Equipos entrenando manipulación, VLA o imitation learning que
-              necesitan data real de entornos industriales en México.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact / Waitlist -->
-    <section id="contact" class="border-t border-border px-6 py-24 md:py-32">
-      <div class="mx-auto max-w-xl text-center">
-        <p class="text-xs font-medium uppercase tracking-[0.2em] text-muted">
-          Acceso anticipado
-        </p>
-        <h2 class="mt-4 font-serif text-4xl md:text-5xl">
-          Construye con nosotros.
+        <h2
+          class="mt-6 font-display text-4xl font-600 tracking-tight md:text-6xl"
+        >
+          Build with us.
         </h2>
-        <p class="mt-4 text-sm text-muted">
-          ¿Planta, lab de robótica o integrador? Déjanos tu correo — te
-          contactamos para un piloto en el noreste de México.
+        <p class="mx-auto mt-6 max-w-md text-sm leading-relaxed text-muted">
+          Factory, robotics lab, or integrator — leave your email and we'll
+          reach out about pilots in northern Mexico.
         </p>
-
         <form
           id="waitlist-form"
           action="https://formspree.io/f/mqerlkzb"
           method="POST"
-          class="mt-10 flex flex-col gap-3 sm:flex-row"
+          class="mx-auto mt-12 flex max-w-lg flex-col gap-3 sm:flex-row"
         >
           <input type="hidden" name="_subject" value="Seneca Trace — waitlist" />
           <input
             type="email"
             name="email"
             required
-            placeholder="tu@empresa.com"
-            class="flex-1 rounded-full border border-border bg-surface px-5 py-3 text-sm text-accent placeholder:text-muted focus:border-muted focus:outline-none"
+            placeholder="you@company.com"
+            class="flex-1 rounded border border-border bg-surface px-5 py-3.5 text-sm text-fg placeholder:text-muted focus:border-signal/60 focus:outline-none"
           />
           <select
             name="tipo"
-            class="rounded-full border border-border bg-surface px-5 py-3 text-sm text-muted focus:border-muted focus:outline-none sm:max-w-[180px]"
+            class="rounded border border-border bg-surface px-4 py-3.5 font-mono text-[12px] text-muted focus:border-signal/60 focus:outline-none"
           >
-            <option value="planta">Planta / Manufactura</option>
-            <option value="robotics">Lab de robótica / IA</option>
-            <option value="integrador">Integrador</option>
-            <option value="otro">Otro</option>
+            <option value="factory">Factory</option>
+            <option value="robotics">Robotics / AI lab</option>
+            <option value="integrator">Integrator</option>
+            <option value="other">Other</option>
           </select>
           <button
             type="submit"
-            class="rounded-full bg-accent px-8 py-3 text-sm font-medium text-ink transition hover:bg-white"
+            class="rounded bg-signal px-8 py-3.5 font-display text-sm font-600 text-ink transition hover:brightness-110"
           >
-            Enviar
+            Join
           </button>
         </form>
-        <p id="form-status" class="mt-4 hidden text-sm text-muted"></p>
-        <p class="mt-6 text-xs text-muted">
-          O escríbenos directo:
-          <a href="mailto:hello@senecatrace.com" class="underline hover:text-accent"
+        <p id="form-status" class="mt-4 hidden font-mono text-[12px] text-muted"></p>
+        <p class="mt-8 font-mono text-[12px] text-muted">
+          or write us —
+          <a
+            href="mailto:hello@senecatrace.com"
+            class="text-fg underline decoration-border underline-offset-4 transition hover:decoration-signal"
             >hello@senecatrace.com</a
           >
         </p>
@@ -287,10 +404,10 @@
     <!-- Footer -->
     <footer class="border-t border-border px-6 py-10">
       <div
-        class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-xs text-muted md:flex-row"
+        class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-widest text-muted md:flex-row"
       >
-        <span>Seneca Trace · senecatrace.com</span>
-        <span>Saltillo & Monterrey, México</span>
+        <span>Seneca·Trace — the data layer for Physical AI</span>
+        <span>Saltillo · Monterrey · MX</span>
       </div>
     </footer>
 
@@ -300,7 +417,7 @@
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        status.textContent = "Enviando…";
+        status.textContent = "Sending…";
         status.classList.remove("hidden");
         try {
           const res = await fetch(form.action, {
@@ -309,13 +426,13 @@
             headers: { Accept: "application/json" },
           });
           if (res.ok) {
-            status.textContent = "Listo. Te contactamos pronto.";
+            status.textContent = "Done. We'll be in touch soon.";
             form.reset();
           } else {
-            status.textContent = "Error al enviar. Intenta por email.";
+            status.textContent = "Something failed — email us instead.";
           }
         } catch {
-          status.textContent = "Error de red. Escríbenos por email.";
+          status.textContent = "Network error — email us instead.";
         }
       });
     </script>
