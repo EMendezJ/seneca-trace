@@ -6,7 +6,7 @@
     <title>Seneca Trace | Industrial datasets for Physical AI</title>
     <meta
       name="description"
-      content="We capture expert human work on real production lines in northern Mexico and package it as training-ready datasets for precision robotics."
+      content="We capture expert human work on real production lines and package it as training-ready datasets for robot foundation models, VLA policies, and imitation learning."
     />
     <meta property="og:title" content="Seneca Trace" />
     <meta
@@ -56,11 +56,119 @@
         background-size: 56px 56px;
       }
       .glow {
-        box-shadow: 0 0 40px rgba(255, 102, 0, 0.10);
+        box-shadow: 0 0 40px rgba(255, 102, 0, 0.12);
       }
       ::selection {
         background: #ff6600;
         color: #050507;
+      }
+
+      /* Motion */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+
+      .hero-line {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      .hero-line:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .hero-line:nth-child(2) {
+        animation-delay: 0.18s;
+      }
+      .hero-line:nth-child(3) {
+        animation-delay: 0.32s;
+      }
+      .hero-cta {
+        opacity: 0;
+        animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+      }
+
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .metric-card {
+        transition: transform 0.35s ease, border-color 0.35s ease;
+      }
+      .metric-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .demo-card {
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.35s ease, box-shadow 0.35s ease;
+      }
+      .demo-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 102, 0, 0.45);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      }
+      .demo-card video {
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .demo-card:hover video {
+        transform: scale(1.03);
+      }
+
+      .pulse-dot {
+        animation: pulse 2.4s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          box-shadow: 0 0 0 0 rgba(255, 102, 0, 0.45);
+        }
+        50% {
+          opacity: 0.7;
+          box-shadow: 0 0 0 6px rgba(255, 102, 0, 0);
+        }
+      }
+
+      .grid-fade {
+        mask-image: radial-gradient(
+          ellipse 70% 60% at 50% 20%,
+          #000 40%,
+          transparent 100%
+        );
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .hero-line,
+        .hero-cta,
+        .demo-card,
+        .demo-card video,
+        .metric-card,
+        .pulse-dot {
+          animation: none !important;
+          transition: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
       }
     </style>
   </head>
@@ -79,6 +187,7 @@
           class="hidden items-center gap-8 font-mono text-[11px] uppercase tracking-widest text-muted md:flex"
         >
           <a href="#problem" class="transition hover:text-fg">Problem</a>
+          <a href="#demos" class="transition hover:text-fg">Demos</a>
           <a href="#how" class="transition hover:text-fg">How it works</a>
           <a href="#data" class="transition hover:text-fg">The data</a>
           <a href="#access" class="transition hover:text-fg">Access</a>
@@ -93,22 +202,36 @@
     </header>
 
     <!-- Hero -->
-    <section class="relative px-6 pb-28 pt-36 md:pb-36 md:pt-48">
-      <div class="mx-auto max-w-5xl">
+    <section class="relative overflow-hidden px-6 pb-24 pt-36 md:pb-32 md:pt-44">
+      <div
+        class="pointer-events-none absolute inset-0 grid-fade opacity-60"
+        aria-hidden="true"
+      ></div>
+      <div class="relative mx-auto max-w-5xl">
+        <p
+          class="hero-line mb-8 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-muted"
+        >
+          <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-signal"></span>
+          Physical AI · Demonstration data
+        </p>
         <h1
           class="font-display text-5xl font-600 leading-[1.02] tracking-tight md:text-8xl"
         >
-          Expert human work,<br />
-          <span class="text-muted">packaged as</span>
-          <span class="text-signal">training data.</span>
+          <span class="hero-line block">Expert human work,</span>
+          <span class="hero-line block">
+            <span class="text-muted">packaged as</span>
+            <span class="text-signal">training data.</span>
+          </span>
         </h1>
-        <p class="mt-10 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
+        <p
+          class="hero-line mt-10 max-w-2xl text-base leading-relaxed text-muted md:text-lg"
+        >
           Seneca Trace operates capture infrastructure inside active
           manufacturing lines, converting expert demonstrations into
           millimeter-precision datasets for robot foundation models, VLA
           policies, and imitation learning at scale.
         </p>
-        <div class="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div class="hero-cta mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">
           <a
             href="#access"
             class="glow rounded bg-signal px-8 py-3.5 text-center font-display text-sm font-600 text-ink transition hover:brightness-110"
@@ -116,21 +239,21 @@
             Request early access
           </a>
           <a
-            href="#how"
+            href="#demos"
             class="px-2 py-3 font-mono text-[12px] uppercase tracking-widest text-muted transition hover:text-fg"
           >
-            How it works ↓
+            Watch exemplars ↓
           </a>
         </div>
       </div>
     </section>
 
-    <!-- Market metrics strip -->
+    <!-- Market metrics -->
     <section class="border-y border-border bg-surface px-6 py-10">
       <div
         class="mx-auto grid max-w-6xl grid-cols-2 gap-10 md:grid-cols-4 md:gap-6"
       >
-        <div>
+        <div class="metric-card reveal rounded-lg border border-transparent p-1">
           <p class="font-display text-3xl font-600 text-signal md:text-4xl">
             $5T
           </p>
@@ -138,7 +261,9 @@
             Projected humanoid robotics market by 2050. Source: Morgan Stanley
           </p>
         </div>
-        <div>
+        <div
+          class="metric-card reveal reveal-delay-1 rounded-lg border border-transparent p-1"
+        >
           <p class="font-display text-3xl font-600 text-signal md:text-4xl">
             2.1M
           </p>
@@ -146,7 +271,9 @@
             Unfilled US manufacturing jobs projected by 2030. Source: Deloitte
           </p>
         </div>
-        <div>
+        <div
+          class="metric-card reveal reveal-delay-2 rounded-lg border border-transparent p-1"
+        >
           <p class="font-display text-3xl font-600 text-signal md:text-4xl">
             &lt;1%
           </p>
@@ -154,7 +281,9 @@
             Of robot training data comes from real industrial environments
           </p>
         </div>
-        <div>
+        <div
+          class="metric-card reveal reveal-delay-3 rounded-lg border border-transparent p-1"
+        >
           <p class="font-display text-3xl font-600 text-signal md:text-4xl">
             10,000×
           </p>
@@ -166,26 +295,188 @@
       </div>
     </section>
 
+    <!-- Demos -->
+    <section id="demos" class="border-b border-border px-6 py-28 md:py-36">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal">
+          <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
+            00 / Exemplars
+          </p>
+          <h2
+            class="mt-6 max-w-3xl font-display text-4xl font-600 tracking-tight md:text-6xl"
+          >
+            What demonstration data looks like.
+          </h2>
+          <p class="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
+            Public LeRobot episodes from Hugging Face Hub. Used here as format
+            references only. Seneca Trace captures industrial processes under
+            partnership. Proprietary plant footage coming soon.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-6 md:grid-cols-3">
+          <!-- PushT -->
+          <article
+            class="demo-card reveal overflow-hidden rounded-lg border border-border bg-surface"
+          >
+            <div class="relative aspect-[4/3] overflow-hidden bg-ink">
+              <video
+                class="h-full w-full object-cover"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                data-demo-video
+              >
+                <source
+                  src="https://huggingface.co/datasets/lerobot/pusht/resolve/main/videos/observation.image/chunk-000/file-000.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div
+                class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
+              >
+                <span
+                  class="rounded border border-border/80 bg-ink/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted backdrop-blur"
+                >
+                  Exemplar
+                </span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-lg font-600">PushT · Diffusion</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Top-down manipulation trajectories in the PushT environment.
+                Classic imitation-learning benchmark.
+              </p>
+              <a
+                href="https://huggingface.co/datasets/lerobot/pusht"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 inline-block font-mono text-[11px] uppercase tracking-widest text-signal transition hover:brightness-125"
+              >
+                View on Hugging Face →
+              </a>
+            </div>
+          </article>
+
+          <!-- SO100 pickplace top -->
+          <article
+            class="demo-card reveal reveal-delay-1 overflow-hidden rounded-lg border border-border bg-surface"
+          >
+            <div class="relative aspect-[4/3] overflow-hidden bg-ink">
+              <video
+                class="h-full w-full object-cover"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                data-demo-video
+              >
+                <source
+                  src="https://huggingface.co/datasets/lerobot/svla_so100_pickplace/resolve/main/videos/observation.images.top/chunk-000/file-000.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div
+                class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
+              >
+                <span
+                  class="rounded border border-border/80 bg-ink/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted backdrop-blur"
+                >
+                  Exemplar
+                </span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-lg font-600">
+                SO-100 · Pick & place
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Overhead camera stream from a low-cost arm pick-and-place
+                collect. Multi-view capture ready for policy training.
+              </p>
+              <a
+                href="https://huggingface.co/datasets/lerobot/svla_so100_pickplace"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 inline-block font-mono text-[11px] uppercase tracking-widest text-signal transition hover:brightness-125"
+              >
+                View on Hugging Face →
+              </a>
+            </div>
+          </article>
+
+          <!-- SO100 wrist -->
+          <article
+            class="demo-card reveal reveal-delay-2 overflow-hidden rounded-lg border border-border bg-surface"
+          >
+            <div class="relative aspect-[4/3] overflow-hidden bg-ink">
+              <video
+                class="h-full w-full object-cover"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                data-demo-video
+              >
+                <source
+                  src="https://huggingface.co/datasets/lerobot/svla_so100_pickplace/resolve/main/videos/observation.images.wrist/chunk-000/file-000.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div
+                class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
+              >
+                <span
+                  class="rounded border border-border/80 bg-ink/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted backdrop-blur"
+                >
+                  Exemplar
+                </span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-lg font-600">Wrist egocentric</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Wrist-mounted view from the same SO-100 collect. Egocentric
+                streams matter for contact-rich and precision tasks.
+              </p>
+              <a
+                href="https://huggingface.co/spaces/lerobot/visualize_dataset"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 inline-block font-mono text-[11px] uppercase tracking-widest text-signal transition hover:brightness-125"
+              >
+                Open dataset visualizer →
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- Problem -->
     <section id="problem" class="px-6 py-28 md:py-36">
       <div class="mx-auto max-w-6xl">
-        <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
-          01 / The bottleneck
-        </p>
-        <h2
-          class="mt-6 max-w-3xl font-display text-4xl font-600 leading-tight tracking-tight md:text-6xl"
-        >
-          Scaling laws hit robotics.<br />
-          <span class="text-muted">Data is the constraint.</span>
-        </h2>
-        <p class="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
-          Foundation models for manipulation are compute-rich and data-poor.
-          Simulation covers the sim-to-real gap only so far. The frontier is
-          real-world demonstration data from environments that actually matter
-          economically.
-        </p>
+        <div class="reveal">
+          <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
+            01 / The bottleneck
+          </p>
+          <h2
+            class="mt-6 max-w-3xl font-display text-4xl font-600 leading-tight tracking-tight md:text-6xl"
+          >
+            Scaling laws hit robotics.<br />
+            <span class="text-muted">Data is the constraint.</span>
+          </h2>
+          <p class="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
+            Foundation models for manipulation are compute-rich and data-poor.
+            Simulation covers the sim-to-real gap only so far. The frontier is
+            real-world demonstration data from environments that actually matter
+            economically.
+          </p>
+        </div>
         <div class="mt-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-3">
-          <article class="bg-surface p-8 md:p-10">
+          <article class="reveal bg-surface p-8 md:p-10">
             <p class="font-mono text-[11px] text-muted">/ 001</p>
             <h3 class="mt-4 font-display text-lg font-600">
               Not enough trajectories
@@ -196,7 +487,7 @@
               data barely exists on the market.
             </p>
           </article>
-          <article class="bg-surface p-8 md:p-10">
+          <article class="reveal reveal-delay-1 bg-surface p-8 md:p-10">
             <p class="font-mono text-[11px] text-muted">/ 002</p>
             <h3 class="mt-4 font-display text-lg font-600">
               Datasets that don't fit
@@ -206,7 +497,7 @@
               environment. You burn cycles adapting data instead of training.
             </p>
           </article>
-          <article class="bg-surface p-8 md:p-10">
+          <article class="reveal reveal-delay-2 bg-surface p-8 md:p-10">
             <p class="font-mono text-[11px] text-muted">/ 003</p>
             <h3 class="mt-4 font-display text-lg font-600">
               Collection is slow & costly
@@ -223,16 +514,20 @@
     <!-- How -->
     <section id="how" class="border-t border-border px-6 py-28 md:py-36">
       <div class="mx-auto max-w-6xl">
-        <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
-          02 / How it works
-        </p>
-        <h2
-          class="mt-6 font-display text-4xl font-600 tracking-tight md:text-6xl"
-        >
-          Two sides. One bridge.
-        </h2>
+        <div class="reveal">
+          <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
+            02 / How it works
+          </p>
+          <h2
+            class="mt-6 font-display text-4xl font-600 tracking-tight md:text-6xl"
+          >
+            Two sides. One bridge.
+          </h2>
+        </div>
         <div class="mt-16 grid gap-6 md:grid-cols-2">
-          <div class="rounded-lg border border-border bg-surface p-10">
+          <div
+            class="reveal rounded-lg border border-border bg-surface p-10 transition hover:border-signal/30"
+          >
             <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
               Supply / The factory
             </p>
@@ -245,12 +540,23 @@
               synced RGB-D, egocentric video, and process metadata.
             </p>
             <ul class="mt-6 space-y-2 font-mono text-[12px] text-muted">
-              <li><span class="text-signal">→</span> Zero disruption to production throughput</li>
-              <li><span class="text-signal">→</span> Data rights, consent chain, and IP protection by contract</li>
-              <li><span class="text-signal">→</span> Revenue share on every license, creating a data flywheel for the plant</li>
+              <li>
+                <span class="text-signal">→</span> Zero disruption to production
+                throughput
+              </li>
+              <li>
+                <span class="text-signal">→</span> Data rights, consent chain,
+                and IP protection by contract
+              </li>
+              <li>
+                <span class="text-signal">→</span> Revenue share on every
+                license, creating a data flywheel for the plant
+              </li>
             </ul>
           </div>
-          <div class="rounded-lg border border-border bg-surface p-10">
+          <div
+            class="reveal reveal-delay-1 rounded-lg border border-border bg-surface p-10 transition hover:border-signal/30"
+          >
             <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
               Demand / The lab
             </p>
@@ -263,9 +569,17 @@
               bespoke collection built around your tasks.
             </p>
             <ul class="mt-6 space-y-2 font-mono text-[12px] text-muted">
-              <li><span class="text-signal">→</span> LeRobot / HDF5 / ROS 2 bags</li>
-              <li><span class="text-signal">→</span> Skill segments + success labels</li>
-              <li><span class="text-signal">→</span> Recurring collects on your training cycle</li>
+              <li>
+                <span class="text-signal">→</span> LeRobot / HDF5 / ROS 2 bags
+              </li>
+              <li>
+                <span class="text-signal">→</span> Skill segments + success
+                labels
+              </li>
+              <li>
+                <span class="text-signal">→</span> Recurring collects on your
+                training cycle
+              </li>
             </ul>
           </div>
         </div>
@@ -275,25 +589,31 @@
     <!-- Data spec -->
     <section id="data" class="border-t border-border px-6 py-28 md:py-36">
       <div class="mx-auto max-w-6xl">
-        <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
-          03 / The data
-        </p>
-        <h2
-          class="mt-6 max-w-3xl font-display text-4xl font-600 tracking-tight md:text-6xl"
+        <div class="reveal">
+          <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
+            03 / The data
+          </p>
+          <h2
+            class="mt-6 max-w-3xl font-display text-4xl font-600 tracking-tight md:text-6xl"
+          >
+            Real production lines.<br />
+            <span class="text-muted">Not staged lab demos.</span>
+          </h2>
+          <p class="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
+            Ecologically valid demonstrations from one of North America's densest
+            manufacturing corridors: the nearshoring belt supplying the US
+            automotive and electronics supply chain.
+          </p>
+        </div>
+        <div
+          class="reveal mt-16 overflow-hidden rounded-lg border border-border"
         >
-          Real production lines.<br />
-          <span class="text-muted">Not staged lab demos.</span>
-        </h2>
-        <p class="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
-          Ecologically valid demonstrations from one of North America's densest
-          manufacturing corridors: the nearshoring belt supplying the US
-          automotive and electronics supply chain.
-        </p>
-        <div class="mt-16 overflow-hidden rounded-lg border border-border">
           <table class="w-full text-left text-sm">
             <tbody class="divide-y divide-border">
-              <tr class="bg-surface">
-                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted md:w-64">
+              <tr class="bg-surface transition hover:bg-raise">
+                <td
+                  class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted md:w-64"
+                >
                   Environments
                 </td>
                 <td class="px-6 py-4 text-muted">
@@ -301,8 +621,10 @@
                   North American nearshoring corridor
                 </td>
               </tr>
-              <tr class="bg-surface">
-                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted">
+              <tr class="bg-surface transition hover:bg-raise">
+                <td
+                  class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted"
+                >
                   Signals
                 </td>
                 <td class="px-6 py-4 text-muted">
@@ -310,8 +632,10 @@
                   timestamps · optional wrist IMU
                 </td>
               </tr>
-              <tr class="bg-surface">
-                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted">
+              <tr class="bg-surface transition hover:bg-raise">
+                <td
+                  class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted"
+                >
                   Annotations
                 </td>
                 <td class="px-6 py-4 text-muted">
@@ -319,16 +643,20 @@
                   process versioning · scene calibration
                 </td>
               </tr>
-              <tr class="bg-surface">
-                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted">
+              <tr class="bg-surface transition hover:bg-raise">
+                <td
+                  class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted"
+                >
                   Formats
                 </td>
                 <td class="px-6 py-4 text-muted">
                   LeRobot · HDF5 · ROS 2 bags · custom pipelines on request
                 </td>
               </tr>
-              <tr class="bg-surface">
-                <td class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted">
+              <tr class="bg-surface transition hover:bg-raise">
+                <td
+                  class="px-6 py-4 font-mono text-[11px] uppercase tracking-widest text-muted"
+                >
                   Licensing
                 </td>
                 <td class="px-6 py-4 text-muted">
@@ -340,7 +668,7 @@
           </table>
         </div>
         <blockquote
-          class="mt-16 max-w-3xl border-l-2 border-signal pl-6 font-display text-xl font-500 leading-relaxed text-muted md:text-2xl"
+          class="reveal mt-16 max-w-3xl border-l-2 border-signal pl-6 font-display text-xl font-500 leading-relaxed text-muted md:text-2xl"
         >
           Seneca taught a generation through letters, knowledge that traveled
           without the teacher. Our datasets are those letters. Robots are the
@@ -349,9 +677,9 @@
       </div>
     </section>
 
-    <!-- Access / waitlist -->
+    <!-- Access -->
     <section id="access" class="border-t border-border px-6 py-28 md:py-36">
-      <div class="mx-auto max-w-2xl text-center">
+      <div class="reveal mx-auto max-w-2xl text-center">
         <p class="font-mono text-[11px] uppercase tracking-widest text-signal">
           04 / Early access
         </p>
@@ -417,6 +745,45 @@
     </footer>
 
     <script>
+      // Scroll reveal
+      const revealEls = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+        );
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add("is-visible"));
+      }
+
+      // Autoplay demo videos when in view (muted)
+      const videos = document.querySelectorAll("[data-demo-video]");
+      if ("IntersectionObserver" in window) {
+        const vio = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const v = entry.target;
+              if (entry.isIntersecting) {
+                v.play().catch(() => {});
+              } else {
+                v.pause();
+              }
+            });
+          },
+          { threshold: 0.4 }
+        );
+        videos.forEach((v) => vio.observe(v));
+      }
+
+      // Waitlist form
       const form = document.getElementById("waitlist-form");
       const status = document.getElementById("form-status");
 
