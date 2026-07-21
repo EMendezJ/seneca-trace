@@ -132,6 +132,13 @@
       .demo-card:hover video {
         transform: scale(1.03);
       }
+      .demo-card.is-playing .demo-play {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .demo-play {
+        transition: opacity 0.25s ease;
+      }
 
       .pulse-dot {
         animation: pulse 2.4s ease-in-out infinite;
@@ -358,16 +365,24 @@
                 muted
                 loop
                 playsinline
-                preload="metadata"
+                preload="none"
+                poster="/assets/packaging-ego.jpg"
                 data-demo-video
+                data-src="/assets/packaging-ego.mp4"
+              ></video>
+              <button
+                type="button"
+                class="demo-play absolute inset-0 z-10 flex items-center justify-center bg-ink/35 transition hover:bg-ink/20"
+                aria-label="Play packaging demo"
               >
-                <source
-                  src="https://huggingface.co/datasets/TrainThemAI/Industrial-Workplace-Egocentric-FHD-Samples/resolve/main/Packaging%20Factory.mp4"
-                  type="video/mp4"
-                />
-              </video>
+                <span
+                  class="rounded-full border border-border bg-ink/80 px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-fg backdrop-blur"
+                >
+                  Play
+                </span>
+              </button>
               <div
-                class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
+                class="pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
               >
                 <span
                   class="rounded border border-border/80 bg-ink/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted backdrop-blur"
@@ -403,16 +418,24 @@
                 muted
                 loop
                 playsinline
-                preload="metadata"
+                preload="none"
+                poster="/assets/metal-fab-ego.jpg"
                 data-demo-video
+                data-src="/assets/metal-fab-ego.mp4"
+              ></video>
+              <button
+                type="button"
+                class="demo-play absolute inset-0 z-10 flex items-center justify-center bg-ink/35 transition hover:bg-ink/20"
+                aria-label="Play metal fabrication demo"
               >
-                <source
-                  src="https://huggingface.co/datasets/TrainThemAI/Industrial-Workplace-Egocentric-FHD-Samples/resolve/main/Metal%20Fabricator%20Factory.mp4"
-                  type="video/mp4"
-                />
-              </video>
+                <span
+                  class="rounded-full border border-border bg-ink/80 px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-fg backdrop-blur"
+                >
+                  Play
+                </span>
+              </button>
               <div
-                class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
+                class="pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
               >
                 <span
                   class="rounded border border-border/80 bg-ink/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted backdrop-blur"
@@ -448,16 +471,24 @@
                 muted
                 loop
                 playsinline
-                preload="metadata"
+                preload="none"
+                poster="/assets/egocentric10k-factory.jpg"
                 data-demo-video
+                data-src="/assets/egocentric10k-factory-exemplar.mp4"
+              ></video>
+              <button
+                type="button"
+                class="demo-play absolute inset-0 z-10 flex items-center justify-center bg-ink/35 transition hover:bg-ink/20"
+                aria-label="Play factory egocentric demo"
               >
-                <source
-                  src="/assets/egocentric10k-factory-exemplar.mp4"
-                  type="video/mp4"
-                />
-              </video>
+                <span
+                  class="rounded-full border border-border bg-ink/80 px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-fg backdrop-blur"
+                >
+                  Play
+                </span>
+              </button>
               <div
-                class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
+                class="pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12"
               >
                 <span
                   class="rounded border border-border/80 bg-ink/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted backdrop-blur"
@@ -790,23 +821,81 @@
         revealEls.forEach((el) => el.classList.add("is-visible"));
       }
 
-      // Autoplay demo videos when in view (muted)
-      const videos = document.querySelectorAll("[data-demo-video]");
-      if ("IntersectionObserver" in window) {
+      // Lazy demo videos: poster first, load on demand (tap on mobile)
+      const isCoarse =
+        window.matchMedia &&
+        (window.matchMedia("(pointer: coarse)").matches ||
+          window.matchMedia("(max-width: 768px)").matches);
+
+      function loadVideo(v) {
+        if (v.dataset.loaded === "1") return Promise.resolve();
+        const src = v.dataset.src;
+        if (!src) return Promise.resolve();
+        v.src = src;
+        v.dataset.loaded = "1";
+        return new Promise((resolve) => {
+          const done = () => {
+            v.removeEventListener("loadeddata", done);
+            resolve();
+          };
+          v.addEventListener("loadeddata", done);
+          v.load();
+        });
+      }
+
+      async function playDemo(v) {
+        const card = v.closest(".demo-card");
+        // Pause others to save bandwidth/CPU
+        document.querySelectorAll("[data-demo-video]").forEach((other) => {
+          if (other !== v) {
+            other.pause();
+            other.closest(".demo-card")?.classList.remove("is-playing");
+          }
+        });
+        await loadVideo(v);
+        try {
+          await v.play();
+          card?.classList.add("is-playing");
+        } catch {
+          card?.classList.remove("is-playing");
+        }
+      }
+
+      document.querySelectorAll(".demo-card").forEach((card) => {
+        const v = card.querySelector("[data-demo-video]");
+        const btn = card.querySelector(".demo-play");
+        if (!v || !btn) return;
+
+        btn.addEventListener("click", () => {
+          if (v.paused) playDemo(v);
+          else {
+            v.pause();
+            card.classList.remove("is-playing");
+          }
+        });
+
+        v.addEventListener("pause", () => card.classList.remove("is-playing"));
+        v.addEventListener("play", () => card.classList.add("is-playing"));
+      });
+
+      // Desktop: autoplay muted when scrolled into view (still lazy)
+      if (!isCoarse && "IntersectionObserver" in window) {
         const vio = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               const v = entry.target;
-              if (entry.isIntersecting) {
-                v.play().catch(() => {});
-              } else {
+              if (entry.isIntersecting) playDemo(v);
+              else {
                 v.pause();
+                v.closest(".demo-card")?.classList.remove("is-playing");
               }
             });
           },
-          { threshold: 0.4 }
+          { threshold: 0.45 }
         );
-        videos.forEach((v) => vio.observe(v));
+        document
+          .querySelectorAll("[data-demo-video]")
+          .forEach((v) => vio.observe(v));
       }
 
       // Metric counters (count up for large, down for small)
