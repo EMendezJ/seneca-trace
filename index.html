@@ -244,12 +244,6 @@
           contactamos para un piloto en el noreste de México.
         </p>
 
-        <!--
-          SETUP: Reemplaza YOUR_FORM_ID con tu ID de Formspree
-          1. Ve a https://formspree.io → Create form → email: tu@correo.com
-          2. Copia el endpoint (ej. https://formspree.io/f/xyzabcde)
-          3. Cambia action abajo
-        -->
         <form
           id="waitlist-form"
           action="https://formspree.io/f/mqerlkzb"
@@ -305,13 +299,6 @@
       const status = document.getElementById("form-status");
 
       form.addEventListener("submit", async (e) => {
-        if (form.action.includes("YOUR_FORM_ID")) {
-          e.preventDefault();
-          status.textContent =
-            "Configura Formspree en index.html (reemplaza YOUR_FORM_ID).";
-          status.classList.remove("hidden");
-          return;
-        }
         e.preventDefault();
         status.textContent = "Enviando…";
         status.classList.remove("hidden");
