@@ -254,8 +254,16 @@
         class="mx-auto grid max-w-6xl grid-cols-2 gap-10 md:grid-cols-4 md:gap-6"
       >
         <div class="metric-card reveal rounded-lg border border-transparent p-1">
-          <p class="font-display text-3xl font-600 text-signal md:text-4xl">
-            $5T
+          <p
+            class="font-display text-3xl font-600 text-signal md:text-4xl"
+            data-count
+            data-target="5"
+            data-prefix="$"
+            data-suffix="T"
+            data-decimals="0"
+            data-dir="up"
+          >
+            $0T
           </p>
           <p class="mt-2 text-xs leading-relaxed text-muted">
             Projected humanoid robotics market by 2050. Source: Morgan Stanley
@@ -264,8 +272,15 @@
         <div
           class="metric-card reveal reveal-delay-1 rounded-lg border border-transparent p-1"
         >
-          <p class="font-display text-3xl font-600 text-signal md:text-4xl">
-            2.1M
+          <p
+            class="font-display text-3xl font-600 text-signal md:text-4xl"
+            data-count
+            data-target="2.1"
+            data-suffix="M"
+            data-decimals="1"
+            data-dir="up"
+          >
+            0M
           </p>
           <p class="mt-2 text-xs leading-relaxed text-muted">
             Unfilled US manufacturing jobs projected by 2030. Source: Deloitte
@@ -274,8 +289,17 @@
         <div
           class="metric-card reveal reveal-delay-2 rounded-lg border border-transparent p-1"
         >
-          <p class="font-display text-3xl font-600 text-signal md:text-4xl">
-            &lt;1%
+          <p
+            class="font-display text-3xl font-600 text-signal md:text-4xl"
+            data-count
+            data-target="1"
+            data-prefix="&lt;"
+            data-suffix="%"
+            data-decimals="0"
+            data-dir="down"
+            data-from="99"
+          >
+            &lt;99%
           </p>
           <p class="mt-2 text-xs leading-relaxed text-muted">
             Of robot training data comes from real industrial environments
@@ -284,8 +308,16 @@
         <div
           class="metric-card reveal reveal-delay-3 rounded-lg border border-transparent p-1"
         >
-          <p class="font-display text-3xl font-600 text-signal md:text-4xl">
-            10,000×
+          <p
+            class="font-display text-3xl font-600 text-signal md:text-4xl"
+            data-count
+            data-target="10000"
+            data-suffix="×"
+            data-decimals="0"
+            data-dir="up"
+            data-format="comma"
+          >
+            0×
           </p>
           <p class="mt-2 text-xs leading-relaxed text-muted">
             Data gap between language models and embodied AI. The scaling
@@ -783,6 +815,69 @@
           { threshold: 0.4 }
         );
         videos.forEach((v) => vio.observe(v));
+      }
+
+      // Metric counters (count up for large, down for small)
+      const prefersReduced =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function formatCount(value, el) {
+        const decimals = Number(el.dataset.decimals || 0);
+        const prefix = el.dataset.prefix || "";
+        const suffix = el.dataset.suffix || "";
+        let num = value.toFixed(decimals);
+        if (el.dataset.format === "comma") {
+          num = Math.round(value).toLocaleString("en-US");
+        }
+        // Decode HTML entities in prefix for display (e.g. &lt;)
+        const tmp = document.createElement("textarea");
+        tmp.innerHTML = prefix;
+        return tmp.value + num + suffix;
+      }
+
+      function animateCount(el) {
+        const target = Number(el.dataset.target);
+        const dir = el.dataset.dir || "up";
+        const from =
+          dir === "down"
+            ? Number(el.dataset.from || 100)
+            : Number(el.dataset.from || 0);
+        const duration = 1400;
+        if (prefersReduced) {
+          el.textContent = formatCount(target, el);
+          return;
+        }
+        const start = performance.now();
+        const ease = (t) => 1 - Math.pow(1 - t, 3);
+
+        function frame(now) {
+          const t = Math.min(1, (now - start) / duration);
+          const p = ease(t);
+          const current = from + (target - from) * p;
+          el.textContent = formatCount(current, el);
+          if (t < 1) requestAnimationFrame(frame);
+          else el.textContent = formatCount(target, el);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      const countEls = document.querySelectorAll("[data-count]");
+      if ("IntersectionObserver" in window) {
+        const cio = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                animateCount(entry.target);
+                cio.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+        countEls.forEach((el) => cio.observe(el));
+      } else {
+        countEls.forEach((el) => animateCount(el));
       }
 
       // Waitlist form
