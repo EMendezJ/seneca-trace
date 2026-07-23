@@ -1,0 +1,21 @@
+#,group,item,qty,unit,unit_usd,ext_usd,est_mxn_landed,buy_from,notes
+1,PCB,MCU board PCBA,1,ea,85.0,85.0,1955,JLCPCB/PCBWay,1 board is enough for MVP
+2,PCB,Sensor board PCBA (fingertip only),7,ea,22.0,154.0,3542,JLCPCB/PCBWay,5 fingers + 2 spare. Skip palm sensors.
+3,Magnetics,MuMetal — buy smallest sheet / scrap cut,1,sheet,40.0,40.0,920,DigiKey/Amazon/forwarder,Need only 5–7 pcs 11×12mm. Split sheet with another lab if possible.
+4,Magnetics,MQFP-15-7 powder,20,g,150.0,3000.0,69000,Magnequench quote,Placeholder until quote. Ask for smallest sample/MOQ.
+5,Silicone,Ecoflex 00-30 trial kit,1,kit,36.0,36.0,756,Amazon.com.mx,
+6,Silicone,Sil-Poxy 3 oz,1,tube,33.0,33.0,693,Amazon.com.mx,One tube for MVP
+7,Wiring,28 AWG enamel magnet wire,1,spool,9.0,9.0,189,Amazon.com.mx,Skip Maeden tinsel
+8,Glove,Beige thin gloves,2,pair,4.0,8.0,168,Amazon.com.mx / ML,
+9,Consumable,Kapton tape,1,roll,10.0,10.0,210,Amazon.com.mx,
+10,Programming,ST-Link V2 clone OR V3MINIE,1,ea,8.0,8.0,176,Mercado Libre / Mouser,Clone OK for bring-up ($5–12). Official V3MINIE = $25.
+11,Programming,1.27mm SWD header + Dupont,1,set,2.0,2.0,44,Mercado Libre / Steren,Skip TagConnect ($45)
+12,Cable,USB-C data cable,1,ea,8.0,8.0,168,Amazon.com.mx,
+13,Tool,Solder + basic flux paste,1,set,12.0,12.0,252,Steren / Amazon.com.mx,Skip Chip Quik $40
+14,Tool,Multimeter (borrow OK),1,ea,0.0,0.0,0,Borrow / Steren,Put $18 if you must buy
+15,Tool,Gram scale 0.1g,1,ea,12.0,12.0,252,Amazon.com.mx,
+16,Tool,"Cups, sticks, cotton tips, sandpaper, knife",1,kit,15.0,15.0,315,Local / farmacia,
+17,Tool,Mold release spray,1,can,15.0,15.0,315,Amazon.com.mx,
+18,Fab,Resin molds fingertips only,1,set,30.0,30.0,630,Local MTY print,No palm molds
+19,Service,Pulse magnetizer access,1,access,0.0,0.0,0,Tec lab,BLOCKER if no access — then quote Magnet-Physik
+20,Host,Existing Linux laptop,1,ea,0.0,0.0,0,Owned,ROS2 later
