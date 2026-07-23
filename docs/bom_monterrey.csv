@@ -1,0 +1,40 @@
+category,item,qty_per_glove,unit,mpn_or_spec,purpose,priority,buy_from_mx_first,alt_supplier,ship_notes,est_usd_ref,status,notes
+PCB,MCU board assembled,1,ea,STM32F446RET6 + BQ21080 + TCA9548A (design in pcb/mcu_board),Glove MCU / USB-C / I2C hub,P0,JLCPCB (PCBA) or PCBWay,Mouser.mx / DigiKey for parts if hand-solder,"Order PCBA with BOM from Altium export; DHL to MTY ~7-14d",config,todo,Prefer full assembly; BMM350/BHI360 may force PCBWay if not on LCSC
+PCB,Sensor boards assembled,12,ea,2x BMM350 + 1x BHI360 + TCA9406YZPR per board,Tactile taxels + IMU,P0,JLCPCB/PCBWay PCBA,LCSC + hand assemble,"Order 15-20 boards (spares). Dual mag layout per paper",config,todo,24 magnetometers + 12 IMUs total; check Bosch stock before fab
+ELECTRONICS,Bosch BMM350 magnetometer,24,ea,BMM350 / BMM350-B,3-axis mag flux per taxel (dual),P0,Mouser.mx,DigiKey,"Only if not included in PCBA",,,Included if PCBA turnkey
+ELECTRONICS,Bosch BHI360 IMU,12,ea,BHI360,6-axis IMU on each sensor board,P0,Mouser.mx,DigiKey,Only if not included in PCBA,,,
+ELECTRONICS,I2C level translator,12,ea,TCA9406YZPR,Level shift on sensor boards,P0,Mouser.mx,DigiKey,Only if not included in PCBA,,,
+ELECTRONICS,I2C mux (MCU),1,ea,TCA9548ARGER,Aggregate sensor buses,P0,Mouser.mx,DigiKey,On MCU board,,,
+ELECTRONICS,MCU,1,ea,STM32F446RET6,Main controller,P0,Mouser.mx,DigiKey / Arrow MX,,,
+ELECTRONICS,LiPo charger IC,1,ea,BQ21080,Optional battery path,P1,Mouser.mx,DigiKey,Optional for wireless mode,,,
+WIRING,Enameled magnet wire 28 AWG,1,spool,28 AWG enamel,Connect sensors to MCU (BOM substitute for tinsel),P0,Amazon.com.mx,Mercado Libre MTY,"Ships domestically",8.79,todo,Paper used Maeden tinsel CAG25D53YA (hard to buy); enamel is official substitute
+WIRING,Maeden tinsel wire (optional),1,lot,CAG25D53YA,Flexible multi-conductor like paper,P2,Maeden direct (TW),Skip for MVP,"Lead time + MOQ; only if enamel fails mechanically",,todo,Contact Maeden; not critical for first glove
+SHIELD,MuMetal sheet 0.006in x 8x12in,1,sheet,MuMetal 0.1524mm,Crosstalk shield under each taxel (12x 11x12mm),P0,DigiKey / Magnetic Shield Corp,Amazon.com via forwarder,"Cut 12 pcs 11x12mm; sand both faces",79.99,todo,Specialty; expect import. Ask Tec fab for waterjet cut
+ADHESIVE,Sil-Poxy silicone adhesive 3oz,1,tube,Smooth-On Sil-Poxy,Bond elastomer + MuMetal + PCB,P0,Amazon.com.mx / Smooth-On dealers,Amazon.com + Soltek/forwarder,"Critical consumable; order 2 tubes",32.88,todo,Search Silpoxy on Amazon MX first
+MAGNETIC,Magnequench MQFP-15-7 particles,20,g,MQFP-15-7 (25um) NOT MQP,Magnetic filler in elastomer skins,P0,Magnequench sales (mqitechnology.com),No local equiv,"Email sales; lead ~2-3 weeks from Thailand. Do NOT buy MQP",,todo,Hardest long-lead item after magnetizer
+ELASTOMER,Smooth-On Ecoflex 00-30 trial kit,1,kit,Ecoflex 00-30 2lb,Silicone base for magnetic skins,P0,Amazon.com.mx,Smooth-On distributor / Amazon.com,"Recipe: 8g A + 8g B + 16g MQFP",36.02,todo,Confirm Shore 00-30; avoid unrelated Ecoflex MX rotomolding company
+FAB,3D printed fingertip molds,1,set,High-res resin / VeroWhite class,Mold fingertip magnetic patches,P0,Local MTY resin print (FabLab / print shops),JLCPCB 3D / PCBWay,"OSMO TODO: mold STL not uploaded yet; reverse from paper dims or contact authors",,todo,Ask Jessica Yin / open issue for STL
+FAB,3D printed palm molds,1,set,High-res resin,Mold palm patches,P0,Local MTY resin print,JLCPCB 3D,,,todo,
+GLOVE,Beige thin work gloves,2,ea,Nitrile/cotton blend beige,Base + outer cover glove,P0,Amazon.com.mx,Mercado Libre / Home Depot MX,"Match thin beige look for hand tracking",7.99,todo,Buy 1-2 sizes; paper link was Amazon US
+TAPE,Kapton tape,1,roll,Polyimide tape,Insulation / assembly aid,P0,Amazon.com.mx,Mercado Libre / Steren (approx),,9.99,todo,
+PROG,ST-Link V3 programmer,1,ea,STLINK-V3SET or V3MINIE,Flash STM32 firmware,P0,Mouser.mx,DigiKey / Amazon.com.mx,"Official preferred over clones for Hub/TRL work",72.50,todo,Clone ST-Link V2 OK for bring-up only
+PROG,Tag-Connect TC2030-IDC-NL,1,ea,TC2030-IDC-NL,Pogo programming cable to MCU pads,P0,Tag-Connect.com,DigiKey,"Ships internationally; or solder temporary SWD header for MVP",33.95,todo,MVP workaround: 1.27mm SWD header instead of TagConnect
+CABLE,USB-C to USB-A 10ft,1,ea,USB2 data capable,Power + data tether,P0,Amazon.com.mx,Mercado Libre,,9.99,todo,Use data cable not charge-only
+TOOL,Soldering iron fine tip,1,ea,Temp controlled,SMT + wire joints,P0,Amazon.com.mx,Mercado Libre MTY / Steren,, ,have_or_buy,Team may already own
+TOOL,Solder (leaded OK for proto),1,spool,Sn63/Pb37 or SAC305,Joints,P0,Amazon.com.mx / Steren,Mercado Libre,,,
+TOOL,Chip Quik flux SMD4300TF30,1,syringe,SMD4300TF30,Soldering quality (optional but recommended),P1,Mouser.mx,DigiKey,39.99,,
+TOOL,Multimeter,1,ea,Basic continuity,Verify wiring before flash,P0,Steren MTY / Amazon.com.mx,Mercado Libre,,,
+TOOL,Scale 0.1g,1,ea,Gram scale,8g+8g+16g mix ratios,P0,Amazon.com.mx,Mercado Libre,,,
+TOOL,Plastic cups + stir sticks,1,pack,,Mix elastomer,P0,Amazon.com.mx / local,Mercado Libre,,,
+TOOL,Cotton applicators,1,pack,,Apply Sil-Poxy,P0,Farmacia / Amazon.com.mx,,,,
+TOOL,Mold release spray,1,can,Silicone mold release,Demold magnetic skins,P0,Amazon.com.mx,Smooth-On Ease Release via import,,,
+TOOL,Sandpaper coarse,1,pack,,Prep MuMetal adhesion,P0,Home Depot MX / Amazon.com.mx,,,,
+TOOL,Xacto / craft knife,1,ea,,Trim elastomer flash,P1,Amazon.com.mx / papeleria,,,,
+TOOL,UV glue + UV light (optional),1,kit,,Reinforce solder joints,P2,Amazon.com.mx,Mercado Libre,,,
+EQUIP,Pulse magnetizer,1,access,Magnet-Physik IM-K / similar,Axially magnetize skins 8s @ 2kV,P0,Tec lab collaboration OR Magnet-Physik service,Do not buy full unit for MVP,"BLOCKER. Settings in official bom.md FAQ. Stack skins centered in chamber",,todo,Ask Tec materials/physics labs; Magnet-Physik offers batch magnetizing service
+OPT,Laser-cut acrylic hand stencil,1,ea,Acrylic,Assembly placement aid,P2,Local laser MTY (fab labs),,Optional,,,
+SENECA,Head-mounted RGB camera,1,ea,GoPro / Insta360 / Quest / RealSense D435,Egocentric video (Seneca Trace add-on),P1,Amazon.com.mx / local camera shops,Mouser for RealSense,"Not in OSMO BOM; needed for your capture stack",,todo,Start with phone/Action cam if budget tight
+SENECA,Wrist-mounted RGB camera,1-2,ea,Arducam / OV5640 module or GoPro Session class,Wrist egocentric view,P1,Amazon.com.mx / Mercado Libre,AliExpress via forwarder,"Mount to glove cuff; sync timestamps in software",,todo,
+SENECA,Host PC ROS2 capable,1,ea,Linux x86_64,Record + flash + ROS2 nodes,P0,Local,,"Use existing lab laptop",,todo,
+PROCUREMENT,Import forwarder (optional),1,service,Soltek / MyUS / similar,Bridge DigiKey/Amazon US → MX with CFDI,P1,soltekonline.com,,, ,todo,Use when DigiKey card/customs friction
+PROCUREMENT,PCBA house MX (optional later),1,quote,Local EMS Monterrey,Second-source assembly after first China fab,P2,Local EMS (Apodaca industrial),,After design freeze,,,
